@@ -1,6 +1,26 @@
 body {
-  background-image: url("Habit-Reboot\src\assets\5778320.jpg");
-  background-size: cover;
-  background-position: center;
+   
+    align-items: center;
+    background-image: url("https://static.vecteezy.com/system/resources/thumbnails/002/773/418/small/gradient-calming-purple-tropical-background-free-vector.jpg");
   background-repeat: no-repeat;
+}
+span
+{
+    justify-content: center;
+}
+h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1.2;
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+p {
+    margin: 2px;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 600px;
 }
