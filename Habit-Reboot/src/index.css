@@ -1,7 +1,5 @@
-:root
-
-  {
-  background-image: url("Habit-Reboot\src\assets\5778320.jpg");
+body {
+  background-image: url("../assets/5778320.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
