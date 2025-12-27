@@ -20,6 +20,6 @@ body {
   cursor: pointer;
   background: var(--card-bg);
   color: var(--text-color);
-  border-radius: 8px;
-  transition: 0.3s ease;
+  border-radius: 2px;
+  transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
