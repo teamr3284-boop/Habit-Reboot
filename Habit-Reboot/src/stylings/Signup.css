@@ -107,6 +107,3 @@ input[type="password"]{
 button:hover{
    background-color: rgb(62, 174, 226);
 }
-.svg{
-   position: absolute;
-}
