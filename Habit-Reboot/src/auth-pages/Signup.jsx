@@ -15,7 +15,7 @@ const logged = () =>
     return(<>
     
         
-    
+    <div className="signup-page">
          <div className="container">
          
         
@@ -32,7 +32,7 @@ const logged = () =>
             </div>
 
         
-             
+             </div>
     </>) 
     
 }

@@ -1,0 +1,21 @@
+.landing-page {
+  min-height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.quote {
+  font-style: italic;
+  margin: 1rem 0;
+  opacity: 0.9;
+}
+
+.description {
+  max-width: 500px;
+  margin: 1rem auto;
+  line-height: 1.6;
+}
+
+.features p {
+  margin: 0.4rem 0;
+}
