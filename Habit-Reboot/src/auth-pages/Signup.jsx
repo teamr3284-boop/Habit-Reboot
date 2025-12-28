@@ -1,18 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import '../stylings/Signup.css'; 
 import { useState } from "react";
-import { signup } from "../auth";
+import { signup } from "../firebase/auth";
 export default function Signup()
 {
 const navigate = useNavigate();    
  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleSignup = async (e) => {
-    e.preventDefault();
-const logged = ()=>
+  const logged = ()=>
 {
 navigate("/login")
 }
+  const handleSignup = async (e) => {
+    e.preventDefault();
+
     try {
       await signup(email, password);
       alert("Account created successfully 🎉");
@@ -45,7 +46,7 @@ navigate("/login")
            <input type = "password" placeholder="Password" 
            onChange={(e)=> setPassword(e.target.value)} required></input>
            <button type="submit" className="sign">Sign In</button>
-           <button className= "log" onClick={logged}>Already a user?</button>
+           <button type="button" className= "log" onClick={logged}>Already a user?</button>
 
             </div>
             </form>

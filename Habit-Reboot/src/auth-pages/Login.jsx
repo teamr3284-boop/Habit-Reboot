@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { login } from "../auth";
+import { login } from "../firebase/auth";
 import { useNavigate } from "react-router-dom";
 export default function Login()
 { 
@@ -33,8 +33,8 @@ const [password, setPassword] = useState("")
         <input type="email" placeholder="Email"onChange={(e)=> setEmail(e.target.value)}required></input>
         <input type="password" placeholder="Password" 
         onChange={(e)=> setPassword(e.target.value)}required></input>
-        <button className="log-in" onClick={examples}>Log in</button>
-        <button classname="sign" onClick= {()=> navigate("/Signup")}>New User?{" "}</button>
+        <button type="submit" className="log-in">Log in</button>
+        <button type="button" classname="sign" onClick= {()=> navigate("/Signup")}>New User?{" "}</button>
         </div>
         </form>
         </div>
