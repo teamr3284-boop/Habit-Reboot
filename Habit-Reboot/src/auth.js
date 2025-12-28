@@ -12,4 +12,4 @@ export const login = (email, password) => {
 };
 export const logout = () => {
   return signOut(auth);
-}
+}:
