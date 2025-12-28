@@ -11,7 +11,7 @@ const [password, setPassword] = useState("")
     try {
       await login(email, password);
       alert("Login successful...Noice");
-      navigate("/");
+      navigate("/Dashboard");
     } catch (err) {
       if (err.code === "auth/user-not-found") {
         alert("No account found. You tryna act smart..Go sign up.");
