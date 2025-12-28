@@ -1,19 +1,42 @@
+import { useState } from "react";
+import { login } from "../auth";
 import { useNavigate } from "react-router-dom";
 export default function Login()
 { 
     const navigate = useNavigate();
-
-    const examples = () =>
-    {
-alert('Yo nigga wtf..u tryna steal or what')
-alert('oh its you.....damn you fine piece of shit... sorry Sorry baby😘😘😘😘😘😘😘😘')
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("")
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await login(email, password);
+      alert("Login successful...Noice");
+      navigate("/");
+    } catch (err) {
+      if (err.code === "auth/user-not-found") {
+        alert("No account found. You tryna act smart..Go sign up.");
+      } else if (err.code === "auth/wrong-password") {
+        alert("Incorrect password...you forgot ur password or what");
+      } else if (err.code === "auth/invalid-email") {
+        alert("Invalid email address...Wow u came to sign and dont have valid id");
+      } else {
+        alert("Login failed. Try again...maybe in next life");
+      }
     }
+  };
 
     return(<>
+    <div classname="contains">
+            <form className= "loginbox" onSubmit={handleLogin}>
     <div className="inputs">
-        <input type="email" placeholder="Email"></input>
-        <input type="password" placeholder="Password"></input>
+
+        <input type="email" placeholder="Email"onChange={(e)=> setEmail(e.target.value)}required></input>
+        <input type="password" placeholder="Password" 
+        onChange={(e)=> setPassword(e.target.value)}required></input>
         <button className="log-in" onClick={examples}>Log in</button>
-        <button classname="sign" onClick= {()=> navigate("/Signup")}>New User?</button>
-        </div></>)
+        <button classname="sign" onClick= {()=> navigate("/Signup")}>New User?{" "}</button>
+        </div>
+        </form>
+        </div>
+        </>)
 }
