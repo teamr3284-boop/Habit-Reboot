@@ -16,7 +16,7 @@ navigate("/login")
 
     try {
       await signup(email, password);
-      alert("Account created successfully 🎉");
+      alert("Account created successfully ");
       navigate("/");
     } catch (err) {
       if (err.code === "auth/email-already-in-use") {
