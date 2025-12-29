@@ -6,13 +6,14 @@ import Navbar from './Pages/Navbar.jsx';
 import Landing from "./Pages/Landing.jsx";
 import ToggleDark from "./Pages/ToggleDark.jsx";
 import './App.css';
+import { AuthProvider } from "./context/Authcon.jsx";
 
 
 
 export default function App() {
   return(
     <>
-    
+    <AuthProvider>
     <BrowserRouter>
      <Navbar/>
 
@@ -24,6 +25,7 @@ export default function App() {
 </Routes>
 <ToggleDark/>
     </BrowserRouter>
+    </AuthProvider>
     
     </>
   )

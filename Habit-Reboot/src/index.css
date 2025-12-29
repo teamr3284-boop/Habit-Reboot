@@ -1,6 +1,13 @@
+<<<<<<< HEAD
 body
 {
     display: flex;
 align-items: center;
 justify-content: center;
+=======
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+>>>>>>> 7c05e67b5b86e68b46be40aba6264feb18b6a281
 }
