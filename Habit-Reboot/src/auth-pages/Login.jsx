@@ -1,3 +1,4 @@
+import '../stylings/Login.css'
 import { useState } from "react";
 import { login } from "../firebase/auth";
 import { useNavigate } from "react-router-dom";
