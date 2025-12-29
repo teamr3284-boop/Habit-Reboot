@@ -27,7 +27,7 @@ const [password, setPassword] = useState("")
   };
 
     return(<>
-    <div classname="contains">
+    <div className="contains">
             <form className= "loginbox" onSubmit={handleLogin}>
     <div className="inputs">
 
