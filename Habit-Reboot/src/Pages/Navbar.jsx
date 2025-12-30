@@ -8,10 +8,8 @@ export default function Navbar() {
    
 
       <div className="nav-links">
-        <Link to="/dashboard">Dashboard</Link>
-        <Link to="/Login">Login</Link>
-        <Link to="/Signup">SignUp</Link>
-        <Link to="/dashboard">Dashboard</Link>
+        <div className="logins"></div><Link to="/Login">Login</Link>
+        <div className="signs"></div><Link to="/Signup">SignUp</Link>
       </div>
     </nav>
   );
