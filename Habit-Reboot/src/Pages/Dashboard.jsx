@@ -1,46 +1,53 @@
 import { useEffect, useState } from "react";
+import {auth} from "../firebase/firebase";
 import { listenHabits,
   addHabit,
   toggleHabit,
   deleteHabit,
   logDailyData,} from "../firebase/firestore";
 import AddHabit from "../components/AddHabit";
-import HabitCard from "../components/Card";
+import Card from "../components/Card";
 import "../stylings/Dashboard.css";
+import { onAuthStateChanged } from "firebase/auth";
 export default function Dashboard() {
   const [habits, setHabits] = useState([]);
-  const user = auth.currentUser;
+  const [user, setUser] = useState(null);
   const today = new Date().toISOString().slice(0, 10);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    return listenHabits(user.uid, snap => {
-      setHabits(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+    const unsub = onAuthStateChanged(auth, u => {
+      setUser(u);
+      setLoading(false);
     });
+
+    return unsub;
   }, []);
 
-  const handleMoodSubmit = (mood) => {
+ useEffect(() => {
+    if (!user) return;
+
     const completed = habits.filter(h => h.done).length;
 
     logDailyData(user.uid, today, {
       date: today,
-      mood,
       habitsCompleted: completed,
       totalHabits: habits.length,
       completionRate:
         habits.length === 0 ? 0 : completed / habits.length,
     });
-  };
-  return (
-    <div className="dashboard">
-      <h1 className="dashboard-title">Welcome Back 👋</h1>
+  }, [habits, user, today]);
 
-      <MoodCheckin onSubmit={handleMoodSubmit} />
+  if (loading) return <p>Loading dashboard...</p>;
+
+  return (
+    <div className="dash">
+      <h1 className="dashboard-title">Welcome Back </h1>
 
       <AddHabit
         onAdd={name =>
           addHabit(user.uid, {
-            name,
-            streak: 0,
+            name,  streak: 0,
             done: false,
           })
         }
@@ -48,24 +55,14 @@ export default function Dashboard() {
 
       <div className="habit-list">
         {habits.map(h => (
-          <HabitCard
-            key={h.id}
-            habit={h}
+          <Card key={h.id} habit={h}
             onToggle={() =>
               toggleHabit(
-                user.uid,
-                h.id,
-                !h.done,
+                user.uid, h.id, !h.done,
                 h.done ? h.streak : h.streak + 1
-              )
-            }
-            onDelete={() => deleteHabit(user.uid, h.id)}
-          />
-        ))}
+              )}
+            onDelete={() => deleteHabit(user.uid, h.id)} />   ))}
       </div>
     </div>
   );
 }
-
-   
-    
