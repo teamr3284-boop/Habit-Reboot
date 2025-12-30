@@ -8,15 +8,6 @@ import {
   Timestamp
 } from "firebase/firestore";
 
-export const addHabit = async (uid, habit) => {
-  await addDoc(collection(db, "habits"), {
-    uid,
-    habit,
-    streak: 0,
-    lastCompleted: null,
-    createdAt: Timestamp.now()
-  });
-};
 
 
 export const getHabits = async (uid) => {
@@ -40,3 +31,35 @@ export const fetchHabits = async () => {
   const snapshot = await getDocs(collection(db, "habits"));
   return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 };
+
+export const habitsRef = (uid) =>
+  collection(db, "users", uid, "habits");
+
+export const dailyLogRef = (uid, date) =>
+  doc(db, "users", uid, "dailyLogs", date);
+
+export const addHabit = (uid, habit) =>
+  addDoc(habitsRef(uid), habit);
+
+export const deleteHabit = (uid, id) =>
+  deleteDoc(doc(db, "users", uid, "habits", id));
+
+export const toggleHabit = (uid, id, done, streak) =>
+  updateDoc(doc(db, "users", uid, "habits", id), {
+    done,
+    streak,
+    lastUpdated: new Date(),
+  });
+
+export const listenHabits = (uid, cb) =>
+  onSnapshot(habitsRef(uid), cb);
+
+export const logDailyData = (uid, date, data) =>
+  setDoc(
+    dailyLogRef(uid, date),
+    {
+      ...data,
+      timestamp: serverTimestamp(),
+    },
+    { merge: true }
+  );
