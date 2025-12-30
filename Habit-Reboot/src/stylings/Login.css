@@ -2,7 +2,72 @@
     margin: 0;
     padding: 0;
     height: 100vh;
-    background-image:url('/../public/room.jpeg');
-    background-size:cover ;
+    background-image:url('/../public/loginpage.jpg');
+    background-size:cover;
     background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items:center;
 }
+.loginbox{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 500px;
+}
+.inputs{
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   text-align: center;
+   height: 350px;
+   width: 520px;
+   padding: 10px;
+   border-radius: 30px;
+   background-color: #031a47;
+   box-shadow:20px 20px 15px rgb(4,22,26);
+}
+.heading{
+    text-align: center;
+}
+/*
+.input[type="email"]{
+    border-radius: 20px;
+   
+    padding-bottom: 10px;
+    box-shadow:20px 20px 15px rgb(4,22,26);
+}
+::placeholder{
+   background-color:#2e6aa1; 
+   color: black;
+   border-color: #4988C4;
+   border-radius: 0px;
+   padding-bottom: 10px;
+   box-shadow:20px 20px 15px rgb(4,22,26);
+
+}
+.input[type="password"]{
+    border-radius: 20px;
+    background-color:#4988C4;
+    padding-bottom: 10px;
+    box-shadow:20px 20px 15px rgb(4,22,26);
+}
+.buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.login-in{
+    border-radius: 20px;
+    background-color:#4988C4;
+    padding-bottom: 10px;
+    box-shadow:20px 20px 15px rgb(4,22,26);
+}
+.sign{
+    border-radius: 20px;
+    background-color:#4988C4;
+    padding-bottom: 10px;
+    box-shadow:20px 20px 15px rgb(4,22,26)
+}*/

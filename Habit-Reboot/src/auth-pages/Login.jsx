@@ -30,12 +30,14 @@ const [password, setPassword] = useState("")
     <div className="contains">
             <form className= "loginbox" onSubmit={handleLogin}>
     <div className="inputs">
-
+        <h1 class="heading">Control habits before they control you</h1>
         <input type="email" placeholder="Email"onChange={(e)=> setEmail(e.target.value)}required></input>
         <input type="password" placeholder="Password" 
         onChange={(e)=> setPassword(e.target.value)}required></input>
+        <div className="buttons">
         <button type="submit" className="log-in">Log in</button>
         <button type="button" classname="sign" onClick= {()=> navigate("/Signup")}>New User?{" "}</button>
+        </div>
         </div>
         </form>
         </div>
