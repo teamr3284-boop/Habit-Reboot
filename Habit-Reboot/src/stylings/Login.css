@@ -32,41 +32,62 @@
     text-align: center;
 }
 
+<<<<<<< HEAD
+.inputs[type="emails"]{
+    background-color:#2e6aa1; 
+=======
 .inputs .input[type="email"]{
+>>>>>>> b216fdacd9c3b8158beb088c1fd8c6773c6e735d
     border-radius: 20px;
-   
     padding-bottom: 10px;
     box-shadow:20px 20px 15px rgb(4,22,26);
 }
+<<<<<<< HEAD
+::placeholder{
+   background-color:rgb(132, 191, 247); 
+=======
 .inputs ::placeholder{
    background-color:#2e6aa1; 
+>>>>>>> b216fdacd9c3b8158beb088c1fd8c6773c6e735d
    color: black;
-   border-color: #4988C4;
    border-radius: 0px;
    padding-bottom: 10px;
    box-shadow:20px 20px 15px rgb(4,22,26);
 
 }
+<<<<<<< HEAD
+.inputs[type="passwords"]{
+=======
 .inputs .input[type="password"]{
+>>>>>>> b216fdacd9c3b8158beb088c1fd8c6773c6e735d
     border-radius: 20px;
     background-color:#4988C4;
     padding-bottom: 10px;
     box-shadow:20px 20px 15px rgb(4,22,26);
+<<<<<<< HEAD
+} 
+.buttons{
+=======
 } */
 .contains .buttons{
+>>>>>>> b216fdacd9c3b8158beb088c1fd8c6773c6e735d
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 }
 
+<<<<<<< HEAD
+.login-in{
+=======
 .login{
+>>>>>>> b216fdacd9c3b8158beb088c1fd8c6773c6e735d
     border-radius: 20px;
     background-color:#4988C4;
     padding-bottom: 10px;
     box-shadow:20px 20px 15px rgb(4,22,26);
 }
-.sign{
+.sign-in{
     border-radius: 20px;
     background-color:#4988C4;
     padding-bottom: 10px;
