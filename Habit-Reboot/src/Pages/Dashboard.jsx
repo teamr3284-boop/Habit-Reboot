@@ -1,64 +1,70 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../context/Authcon";
-import { getHabits, completeHabit } from "../firebase/firestore";
+import { listenHabits,
+  addHabit,
+  toggleHabit,
+  deleteHabit,
+  logDailyData,} from "../firebase/firestore";
+import AddHabit from "../components/AddHabit";
+import HabitCard from "../components/Card";
 import "../stylings/Dashboard.css";
-
 export default function Dashboard() {
-  const { user } = useAuth();
   const [habits, setHabits] = useState([]);
+  const user = auth.currentUser;
+  const today = new Date().toISOString().slice(0, 10);
 
   useEffect(() => {
-    if (user) {
-      getHabits(user.uid).then(setHabits);
-    }
-  }, [user]);
+    return listenHabits(user.uid, snap => {
+      setHabits(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+    });
+  }, []);
 
-  return (<>
-    <h1>Welcome Back 👋</h1>
+  const handleMoodSubmit = (mood) => {
+    const completed = habits.filter(h => h.done).length;
 
-<p>
-  Small habits, done daily, lead to big changes.
-</p>
-
-<hr />
-
-<h2>📊 Your Progress</h2>
-
-<p>Total Habits: {habits.length}</p>
-
-<p>
-  Longest Streak:{" "}
-  {habits.length > 0
-    ? Math.max(...habits.map(h => h.streak))
-    : 0} days
-</p>
-
-<hr />
-
-<h2>🔥 Today’s Habits</h2>
-
+    logDailyData(user.uid, today, {
+      date: today,
+      mood,
+      habitsCompleted: completed,
+      totalHabits: habits.length,
+      completionRate:
+        habits.length === 0 ? 0 : completed / habits.length,
+    });
+  };
+  return (
     <div className="dashboard">
-      <h1>Your Habits</h1>
+      <h1 className="dashboard-title">Welcome Back 👋</h1>
 
-      {habits.length === 0 && <p>No habits yet.</p>}
+      <MoodCheckin onSubmit={handleMoodSubmit} />
 
-      {habits.map((habit) => (
-        <div key={habit.id} className="habit-card">
-          <p><strong>{habit.name}</strong></p>
-          <p>Streak: {habit.streak}</p>
+      <AddHabit
+        onAdd={name =>
+          addHabit(user.uid, {
+            name,
+            streak: 0,
+            done: false,
+          })
+        }
+      />
 
-          <button
-            onClick={() => completeHabit(habit.id, habit.streak)}
-          >
-            Mark Done
-          </button>
-           <button className = "Land" onClick={()=>navigate("/")}>Landing Page</button>
-        </div>
-      ))}
+      <div className="habit-list">
+        {habits.map(h => (
+          <HabitCard
+            key={h.id}
+            habit={h}
+            onToggle={() =>
+              toggleHabit(
+                user.uid,
+                h.id,
+                !h.done,
+                h.done ? h.streak : h.streak + 1
+              )
+            }
+            onDelete={() => deleteHabit(user.uid, h.id)}
+          />
+        ))}
+      </div>
     </div>
-    </>
   );
-  
 }
 
    
