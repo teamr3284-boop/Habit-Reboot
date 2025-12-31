@@ -1,4 +1,4 @@
-import "./MoodCheckin.css";
+import "../stylings/Mood.css";
 
 export default function MoodCheckin({ onSubmit }) {
   const moods = [

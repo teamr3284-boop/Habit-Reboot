@@ -30,7 +30,7 @@ const [password, setPassword] = useState("")
     <div className="contains">
             <form className= "loginbox" onSubmit={handleLogin}>
     <div className="inputs">
-        <h1 class="heading">Control habits before they control you</h1>
+        <h1 className="heading">Control habits before they control you</h1>
         <input type="emails" placeholder="Email"onChange={(e)=> setEmail(e.target.value)}required></input>
         <input type="passwords" placeholder="Password" 
         onChange={(e)=> setPassword(e.target.value)}required></input>
