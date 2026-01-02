@@ -4,70 +4,54 @@ import {
   addDoc,
   updateDoc,
   deleteDoc,
-  setDoc,
   onSnapshot,
+  setDoc,
+  getDocs,
   query,
   orderBy,
-  serverTimestamp,
+  limit,
 } from "firebase/firestore";
 
 import { db } from "./firebase";
+export const listenHabits = (uid, callback) => {
+  const habitsRef = collection(db, "users", uid, "habits");
+  return onSnapshot(habitsRef, callback);
+};
 
-/* ===========================
-   HABITS
-=========================== */
-
-/* 🔄 Listen to habits */
-export function listenHabits(uid, callback) {
-  const ref = collection(db, "users", uid, "habits");
-  return onSnapshot(ref, callback);
-}
-
-/* ➕ Add habit */
-export async function addHabit(uid, habit) {
-  const ref = collection(db, "users", uid, "habits");
-  await addDoc(ref, {
-    ...habit,
-    createdAt: serverTimestamp(),
+export const addHabit = (uid, name) => {
+  return addDoc(collection(db, "users", uid, "habits"), {
+    name,
+    streak: 0,
+    done: false,
+    lastCompleted: null,
+    missedCount: 0,
   });
-}
+};
 
-/* ✅ Toggle habit + update streak */
-export async function toggleHabit(uid, habitId, done, streak) {
+export const updateHabit = (uid, habitId, data) => {
   const ref = doc(db, "users", uid, "habits", habitId);
-  await updateDoc(ref, {
-    done,
-    streak,
-    updatedAt: serverTimestamp(),
-  });
-}
+  return updateDoc(ref, data);
+};
 
-/* ❌ Delete habit */
-export async function deleteHabit(uid, habitId) {
+export const deleteHabit = (uid, habitId) => {
   const ref = doc(db, "users", uid, "habits", habitId);
-  await deleteDoc(ref);
-}
+  return deleteDoc(ref);
+};
 
-/* ===========================
-   DAILY MOOD + HABIT LOGS
-=========================== */
+export const fetchRecentLogs = async (uid) => {
+  const logsRef = collection(db, "users", uid, "dailyLogs");
 
-/* 📝 Save daily mood + stats */
-export async function logDailyData(uid, date, data) {
-  const ref = doc(db, "users", uid, "dailyLogs", date);
-
-  await setDoc(ref, {
-    ...data,
-    createdAt: serverTimestamp(),
-  });
-}
-
-/* 🔄 Listen to daily logs */
-export function listenDailyLogs(uid, callback) {
   const q = query(
-    collection(db, "users", uid, "dailyLogs"),
-    orderBy("createdAt", "desc")
+    logsRef,
+    orderBy("date", "desc"),
+    limit(7)
   );
 
-  return onSnapshot(q, callback);
-}
+  const snap = await getDocs(q);
+  return snap.docs.map((d) => d.data());
+};
+
+export const logDailyData = (uid, date, data) => {
+  const ref = doc(db, "users", uid, "dailyLogs", date);
+  return setDoc(ref, data, { merge: true });
+};

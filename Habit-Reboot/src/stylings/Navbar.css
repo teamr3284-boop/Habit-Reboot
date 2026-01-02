@@ -12,4 +12,9 @@ a{
     margin-right:20px;
     color: rgb(114, 217, 243);
 }
+.nav-links .button
+{
 
+     color: rgb(114, 217, 243);
+    background-color:#213448 ;
+}
