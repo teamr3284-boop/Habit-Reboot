@@ -1,65 +1,57 @@
-import { db } from "./firebase";
 import {
   collection,
+  doc,
   addDoc,
   updateDoc,
-  doc,
+  deleteDoc,
+  onSnapshot,
+  setDoc,
   getDocs,
-  Timestamp
+  query,
+  orderBy,
+  limit,
 } from "firebase/firestore";
 
-
-
-export const getHabits = async (uid) => {
-  const q = query(collection(db, "habits"), where("uid", "==", uid));
-  const snapshot = await getDocs(q);
-
-  return snapshot.docs.map((docSnap) => ({
-    id: docSnap.id,
-    ...docSnap.data()
-  }));
+import { db } from "./firebase";
+export const listenHabits = (uid, callback) => {
+  const habitsRef = collection(db, "users", uid, "habits");
+  return onSnapshot(habitsRef, callback);
 };
 
-export const completeHabit = async (id, streak) => {
-  await updateDoc(doc(db, "habits", id), {
-    streak: streak + 1,
-    lastCompleted: Timestamp.now()
+export const addHabit = (uid, name) => {
+  return addDoc(collection(db, "users", uid, "habits"), {
+    name,
+    streak: 0,
+    done: false,
+    lastCompleted: null,
+    missedCount: 0,
   });
 };
 
-export const fetchHabits = async () => {
-  const snapshot = await getDocs(collection(db, "habits"));
-  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+export const updateHabit = (uid, habitId, data) => {
+  const ref = doc(db, "users", uid, "habits", habitId);
+  return updateDoc(ref, data);
 };
 
-export const habitsRef = (uid) =>
-  collection(db, "users", uid, "habits");
+export const deleteHabit = (uid, habitId) => {
+  const ref = doc(db, "users", uid, "habits", habitId);
+  return deleteDoc(ref);
+};
 
-export const dailyLogRef = (uid, date) =>
-  doc(db, "users", uid, "dailyLogs", date);
+export const fetchRecentLogs = async (uid) => {
+  const logsRef = collection(db, "users", uid, "dailyLogs");
 
-export const addHabit = (uid, habit) =>
-  addDoc(habitsRef(uid), habit);
-
-export const deleteHabit = (uid, id) =>
-  deleteDoc(doc(db, "users", uid, "habits", id));
-
-export const toggleHabit = (uid, id, done, streak) =>
-  updateDoc(doc(db, "users", uid, "habits", id), {
-    done,
-    streak,
-    lastUpdated: new Date(),
-  });
-
-export const listenHabits = (uid, cb) =>
-  onSnapshot(habitsRef(uid), cb);
-
-export const logDailyData = (uid, date, data) =>
-  setDoc(
-    dailyLogRef(uid, date),
-    {
-      ...data,
-      timestamp: serverTimestamp(),
-    },
-    { merge: true }
+  const q = query(
+    logsRef,
+    orderBy("date", "desc"),
+    limit(7)
   );
+
+  const snap = await getDocs(q);
+  return snap.docs.map((d) => d.data());
+};
+
+export const logDailyData = (uid, date, data) => {
+  const ref = doc(db, "users", uid, "dailyLogs", date);
+  return setDoc(ref, data, { merge: true });
+};

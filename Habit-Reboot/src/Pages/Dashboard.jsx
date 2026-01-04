@@ -1,27 +1,64 @@
 import { useEffect, useState } from "react";
-import { listenHabits,
+import { auth } from "../firebase/firebase";
+import {
+  listenHabits,
   addHabit,
-  toggleHabit,
+  updateHabit,
   deleteHabit,
-  logDailyData,} from "../firebase/firestore";
+  logDailyData,
+  fetchRecentLogs,
+} from "../firebase/firestore";
 import AddHabit from "../components/AddHabit";
-import HabitCard from "../components/Card";
-import "../stylings/Dashboard.css";
+import Card from "../components/Card";
+import Mood from "../components/Mood";
+import { todayStr, yesterdayStr } from "../utils/date";
+import { getMoodAwareAdvice } from "../ai/gemini";
+
 export default function Dashboard() {
   const [habits, setHabits] = useState([]);
+  const [aiText, setAiText] = useState("");
   const user = auth.currentUser;
-  const today = new Date().toISOString().slice(0, 10);
+  const today = todayStr();
 
   useEffect(() => {
-    return listenHabits(user.uid, snap => {
+    if (!user) return;
+
+    return listenHabits(user.uid, (snap) => {
       setHabits(snap.docs.map(d => ({ id: d.id, ...d.data() })));
     });
-  }, []);
+  }, [user]);
+  const handleToggle = (habit) => {
+    let updates = { done: !habit.done };
+    if (!habit.done) {
+      if (habit.lastCompleted !== today) {
+        updates.streak = habit.streak + 1;
+        updates.lastCompleted = today;
+      }
+    }
 
-  const handleMoodSubmit = (mood) => {
+    updateHabit(user.uid, habit.id, updates);
+  };
+  useEffect(() => {
+    if (!user) return;
+
+    habits.forEach(habit => {
+      if (
+        habit.lastCompleted &&
+        habit.lastCompleted === yesterdayStr() &&
+        !habit.done
+      ) {
+        updateHabit(user.uid, habit.id, {
+          streak: 0,
+          missedCount: (habit.missedCount || 0) + 1,
+        });
+      }
+    });
+  }, [habits, user]);
+
+  const handleMoodSubmit = async (mood) => {
     const completed = habits.filter(h => h.done).length;
 
-    logDailyData(user.uid, today, {
+    await logDailyData(user.uid, today, {
       date: today,
       mood,
       habitsCompleted: completed,
@@ -30,42 +67,35 @@ export default function Dashboard() {
         habits.length === 0 ? 0 : completed / habits.length,
     });
   };
+
+  const askAI = async () => {
+    const logs = await fetchRecentLogs(user.uid);
+    const text = await getMoodAwareAdvice(logs, habits);
+    setAiText(text);
+  };
+
+  if (!user) return <p>Please log in</p>;
+
   return (
-    <div className="dashboard">
-      <h1 className="dashboard-title">Welcome Back 👋</h1>
+    <div>
+      <h1>Welcome Back</h1>
 
-      <MoodCheckin onSubmit={handleMoodSubmit} />
+      <Mood onSubmit={handleMoodSubmit} />
 
-      <AddHabit
-        onAdd={name =>
-          addHabit(user.uid, {
-            name,
-            streak: 0,
-            done: false,
-          })
-        }
-      />
+      <AddHabit onAdd={(name) => addHabit(user.uid, name)} />
 
-      <div className="habit-list">
-        {habits.map(h => (
-          <HabitCard
-            key={h.id}
-            habit={h}
-            onToggle={() =>
-              toggleHabit(
-                user.uid,
-                h.id,
-                !h.done,
-                h.done ? h.streak : h.streak + 1
-              )
-            }
-            onDelete={() => deleteHabit(user.uid, h.id)}
-          />
-        ))}
-      </div>
+      {habits.map(h => (
+        <Card
+          key={h.id}
+          habit={h}
+          onToggle={() => handleToggle(h)}
+          onDelete={() => deleteHabit(user.uid, h.id)}
+        />
+      ))}
+
+      <button onClick={askAI}>Ask AI Coach</button>
+
+      {aiText && <p>🤖 {aiText}</p>}
     </div>
   );
 }
-
-   
-    

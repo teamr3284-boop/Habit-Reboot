@@ -17,7 +17,7 @@ navigate("/login")
     try {
       await signup(email, password);
       alert("Account created successfully ");
-      navigate("/");
+      navigate("/Dashboard");
     } catch (err) {
       if (err.code === "auth/email-already-in-use") {
         alert("User already exists. Please login.");
