@@ -7,6 +7,7 @@ import Landing from "./Pages/Landing.jsx";
 import ToggleDark from "./Pages/ToggleDark.jsx";
 import './App.css';
 import { AuthProvider } from "./context/Authcon.jsx";
+import Background from "./Pages/Background.jsx";
 
 
 
@@ -15,8 +16,8 @@ export default function App() {
     <>
     <AuthProvider>
     <BrowserRouter>
+    
      <Navbar/>
-
     <Routes>
      <Route path="/" element= {<Landing/>}/>
     <Route path="/Login" element={<Login />}/>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import "../stylings/AddHabit.css";
 export default function AddHabit({ onAdd }) {
   const [name, setName] = useState("");
 

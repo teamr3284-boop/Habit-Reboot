@@ -92,10 +92,11 @@ export default function Dashboard() {
           onDelete={() => deleteHabit(user.uid, h.id)}
         />
       ))}
-
+<div className="Ai">
       <button onClick={askAI}>Ask AI Coach</button>
 
       {aiText && <p>🤖 {aiText}</p>}
+    </div>
     </div>
   );
 }

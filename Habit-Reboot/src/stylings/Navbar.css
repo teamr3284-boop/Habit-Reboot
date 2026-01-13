@@ -1,9 +1,14 @@
+.navbar {
+  position: relative;
+  z-index: 10;
+}
+
 .nav-links{
 display: flex;
 flex-direction: row;
 justify-content: center;
 align-items: center;
-background-color: #213448;
+
 font-family: Arial, Helvetica, sans-serif;
 height:45px;
 }
