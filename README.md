@@ -57,6 +57,5 @@ Users can **create habits, track streaks, log their daily mood, and receive AI-g
 - Git
 - GitHub
 
----
 
-## 📂 Project Structure
+
