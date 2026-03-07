@@ -1,22 +1,70 @@
-.mood-checkin
-{
-    display: flex;
-justify-content: center;
-background-color: white;
-margin-bottom: 20px;
+/* Mood container */
 
+.mood-checkin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+
+  margin: 25px auto;
+  padding: 14px 18px;
+
+  background: white;
+  border-radius: 14px;
+
+  border: 1px solid #e8eef5;
+
+  max-width: 360px;
+
+  box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+
+  transition: all 0.25s ease;
 }
-.mood-checkin button
-{
-    background-color: rgb(0, 195, 255);
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 12px;
+
+.mood-checkin:hover {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08);
 }
+
+/* Mood buttons */
+
+.mood-btn {
+  font-size: 26px;
+
+  background: #f7f9fb;
+  border: 1px solid #e5e7eb;
+
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+/* Hover effect */
+
+.mood-btn:hover {
+  transform: translateY(-3px) scale(1.1);
+  background: #f0fbff;
+  border-color: #bfe9ff;
+}
+
+/* Click effect */
+
+.mood-btn:active {
+  transform: scale(0.95);
+}
+
+/* Optional mood colors */
+
+.mood-btn:nth-child(1):hover { background: #e8fff2; } /* very happy */
+.mood-btn:nth-child(2):hover { background: #f0fbff; }
+.mood-btn:nth-child(3):hover { background: #f6f6f6; }
+.mood-btn:nth-child(4):hover { background: #fff3e8; }
+.mood-btn:nth-child(5):hover { background: #ffeaea; }

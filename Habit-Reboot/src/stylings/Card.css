@@ -1,18 +1,111 @@
-.habit-card
-{
-     color: rgb(0, 195, 255);
+/* Card container */
+
+.habit-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: white;
+
+  padding: 18px 20px;
+  border-radius: 14px;
+
+  border: 1px solid #e6eef5;
+
+  transition: all 0.25s ease;
+  position: relative;
 }
-.habit-card button
-{
-        background-color: rgb(0, 195, 255);
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 12px;
+
+/* Top accent line */
+
+.habit-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  height: 4px;
+  width: 100%;
+
+  border-radius: 14px 14px 0 0;
+
+  background: linear-gradient(90deg, #59c7ff, #6cffb1);
+}
+
+/* Hover effect */
+
+.habit-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 10px 22px rgba(0, 0, 0, 0.08);
+}
+
+/* Habit title */
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #2b2b2b;
+  margin-bottom: 4px;
+}
+
+/* Streak text */
+
+.streak {
+  font-size: 14px;
+  color: #ff7a00;
+  font-weight: 500;
+}
+
+/* Action buttons container */
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* Toggle button */
+
+.toggle {
+  background: linear-gradient(90deg, #59c7ff, #6cffb1);
+  border: none;
+  color: white;
+
+  font-size: 16px;
+
+  width: 36px;
+  height: 36px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* Delete button */
+
+.delete {
+  background: #f3f4f6;
+  border: none;
+
+  font-size: 16px;
+
+  width: 36px;
+  height: 36px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.delete:hover {
+  background: #ffe5e5;
+  transform: scale(1.1);
 }

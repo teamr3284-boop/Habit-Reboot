@@ -1,45 +1,297 @@
+/* ---------- Global Layout ---------- */
 
-span
-{
-    justify-content: center;
+.dashboard-container {
+  min-height: 100vh;
+  padding: 50px 40px;
+  font-family: "Inter", "Segoe UI", sans-serif;
 }
-h1 {
-  font-size: 3rem;
+
+/* Title */
+
+.dashboard-container h1 {
+  text-align: center;
+  font-size: 2.7rem;
   font-weight: 700;
-  letter-spacing: -1px;
-
-  color: rgb(0, 255, 55);
-  margin-bottom: 1rem;
+  color: #2b2b2b;
+  margin-bottom: 35px;
+  letter-spacing: 0.5px;
 }
 
-p {
-    margin: 2px;
-  font-size: 1.1rem;
+/* ---------- Habit Grid ---------- */
 
-  color: rgb(0, 255, 55);
-  max-width: 600px;
+.habit-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+  margin-top: 30px;
 }
-.Land
-{
-  padding: 10px 20px;
+
+/* ---------- Card Styling ---------- */
+
+.card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid #e8eef5;
+
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  border-color: #c7e7ff;
+  box-shadow: 0px 10px 22px rgba(0, 0, 0, 0.08);
+}
+
+/* Habit title */
+
+.card h3 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Streak text */
+
+.card p {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* ---------- Buttons ---------- */
+
+button {
   border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 14px;
   cursor: pointer;
-  background: var(--card-bg);
-  color: var(--text-color);
-  border-radius: 4px;
-  transition: 0.35s ease;
+  transition: all 0.2s ease;
 }
-.AI button
-{
-  background-color: rgb(0, 195, 255);
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 12px;
+
+/* hover micro animation */
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+/* ---------- Add Habit ---------- */
+
+.add-habit {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.add-habit input {
+  padding: 12px;
+  width: 230px;
+  border-radius: 10px;
+  border: 1px solid #dcdcdc;
+  margin-right: 10px;
+  font-size: 14px;
+  transition: border 0.2s;
+}
+
+.add-habit input:focus {
+  outline: none;
+  border-color: #58c8ff;
+}
+
+.add-habit button {
+  background: linear-gradient(90deg, #59c7ff, #6cffb1);
+  color: white;
+  font-weight: 600;
+}
+
+/* ---------- Mood Section ---------- */
+
+.mood-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.mood-container button {
+  background: white;
+  border: 1px solid #e5e7eb;
+  font-size: 20px;
+  padding: 10px 14px;
+}
+
+.mood-container button:hover {
+  background: #f0fbff;
+  border-color: #b9e6ff;
+}
+
+/* ---------- AI Coach Section ---------- */
+
+.Ai {
+  margin-top: 45px;
+  padding: 30px;
+  border-radius: 16px;
+  text-align: center;
+
+  background: linear-gradient(120deg, #e9f9ff, #f4fff3);
+  border: 1px solid #d6f0ff;
+
+  transition: all 0.25s ease;
+}
+
+.Ai:hover {
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.07);
+}
+
+.Ai button {
+  background: linear-gradient(90deg, #4ec9ff, #6bffb3);
+  color: white;
+  font-weight: 600;
+  font-size: 15px;
+
+  padding: 12px 22px;
+  border-radius: 12px;
+}
+
+.Ai button:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.Ai p {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #333;
+
+  background: white;
+  padding: 18px;
+  border-radius: 12px;
+
+  border-left: 5px solid #4ec9ff;
+
+  line-height: 1.6;
+}
+
+
+.card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 4px;
+
+  background: linear-gradient(90deg, #59c7ff, #6cffb1);
+  border-radius: 16px 16px 0 0;
+}
+.card.completed {
+  background: #f0fff6;
+  border-color: #6cffb1;
+}
+
+.card.completed::after {
+  background: linear-gradient(90deg, #6cffb1, #59c7ff);
+}
+
+/* Check button */
+
+.complete-btn {
+  background: #f3f4f6;
+  margin-top: 10px;
+}
+
+.complete-btn.done {
+  background: #6cffb1;
+  color: white;
+  font-weight: 600;
+}
+
+.streak-badge {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 4px 10px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  border-radius: 20px;
+
+  background: #fff4e5;
+  color: #ff7a00;
+}
+
+/* Progress Section */
+
+.progress-section {
+  max-width: 500px;
+  margin: 0 auto 30px auto;
+  text-align: center;
+}
+
+.progress-section p {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+/* Progress Bar */
+
+.progress-bar {
+  height: 12px;
+  background: #e5e7eb;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #59c7ff, #6cffb1);
+  border-radius: 20px;
+  transition: width 0.4s ease;
+}
+
+.progress-section span {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+/* AI typing effect */
+
+.ai-text {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #333;
+
+  background: white;
+  padding: 18px;
+  border-radius: 12px;
+
+  border-left: 5px solid #4ec9ff;
+
+  line-height: 1.6;
+
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid #4ec9ff;
+
+  animation: typing 3s steps(40, end), blink 0.8s infinite;
+}
+
+/* typing animation */
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* cursor blinking */
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
 }
